@@ -6,34 +6,22 @@
 
 import React, { Component } from 'react';
 import {
-  StyleSheet,
-  View
+  View,
 } from 'react-native';
 
-import Header from './src/components/header';
+import AlbumsList from './src/components/AlbumsList';
+import { Header } from './src/components/common';
 
 
+type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      <View style={styles.viewHeader}>
-        <Header headerText={'NgoTien'} />
+      <View style={{ flex: 1 }}>
+        <Header headerText={'Albums'} />
+        <AlbumsList />
       </View>
+
     );
   }
 }
-
-const styles = StyleSheet.create({
-  viewHeader: {
-    backgroundColor: '#F8F8F8',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 60,
-    paddingTop: 15,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    elevation: 2,
-    position: 'relative'
-  }
-});
