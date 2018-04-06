@@ -27,8 +27,8 @@ const AlbumsDetail = ({ albums }) => {
         </Button>
       </CardSection>
     </Card>
-  )
-}
+  );
+};
 
 export default AlbumsDetail;
 
@@ -56,4 +56,4 @@ const styles = {
     width: null,
 
   }
-}
+};
