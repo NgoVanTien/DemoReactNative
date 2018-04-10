@@ -16,6 +16,7 @@ import AlbumsList from './src/components/AlbumsList';
 import { Header, Button, Spinner } from './src/components/common';
 import Login from './src/components/Login';
 import Logout from './src/components/Logout';
+import TechStack from './src/components/TechStack';
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -44,7 +45,8 @@ export default class App extends Component<Props> {
   renderContent() {
     switch (this.state.loggedIn) {
       case true:
-        return <Logout />;
+        // return <Logout />
+        return <TechStack />
       case false:
         return <Login />;
       default:

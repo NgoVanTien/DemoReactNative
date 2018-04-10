@@ -7,8 +7,6 @@ const Header = (props) => (
     </View>
   );
 
-export { Header };
-
 const styles = StyleSheet.create({
   header: {
     fontSize: 20,
@@ -26,3 +24,5 @@ const styles = StyleSheet.create({
     position: 'relative'
   }
 });
+
+export { Header };
