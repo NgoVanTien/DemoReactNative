@@ -9,14 +9,18 @@ import {
   View,
   Text
 } from 'react-native';
-
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
 import firebase from '@firebase/app';
 import '@firebase/firestore'
+import ReduxThunk from 'redux-thunk'
 import AlbumsList from './src/components/AlbumsList';
 import { Header, Button, Spinner } from './src/components/common';
 import Login from './src/components/Login';
 import Logout from './src/components/Logout';
 import TechStack from './src/components/TechStack';
+import reducers from './src/components/reducers';
+
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -45,10 +49,13 @@ export default class App extends Component<Props> {
   renderContent() {
     switch (this.state.loggedIn) {
       case true:
-        // return <Logout />
-        return <TechStack />
+        return <Logout />
+        // return <TechStack />
       case false:
-        return <Login />;
+        return (
+          <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))} >
+            <Login />
+          </Provider>);
       default:
         return <Spinner size="large" />;
     }
@@ -58,7 +65,8 @@ export default class App extends Component<Props> {
     return (
       <View style={{ flex: 1 }}>
         <Header headerText={'Authentication !'} />
-        {this.renderContent()}
+
+          {this.renderContent()}
       </View>
 
     );
