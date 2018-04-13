@@ -20,9 +20,12 @@ import Login from './src/components/Login';
 import Logout from './src/components/Logout';
 import TechStack from './src/components/TechStack';
 import reducers from './src/components/reducers';
-
+import Router from './src/components/Router';
 
 type Props = {};
+
+
+
 export default class App extends Component<Props> {
 
   state = { loggedIn: null }
@@ -36,16 +39,18 @@ export default class App extends Component<Props> {
       storageBucket: 'demoreactnative-6037d.appspot.com',
       messagingSenderId: '429351964403'
     });
-
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({ loggedIn: true });
-      } else {
-        this.setState({ loggedIn: false });
-      }
-    });
+    //
+    // firebase.auth().onAuthStateChanged((user) => {
+    //   if (user) {
+    //     this.setState({ loggedIn: true });
+    //   } else {
+    //     this.setState({ loggedIn: false });
+    //   }
+    // });
   }
 
+
+// Kiem tra da login chua
   renderContent() {
     switch (this.state.loggedIn) {
       case true:
@@ -54,7 +59,8 @@ export default class App extends Component<Props> {
       case false:
         return (
           <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))} >
-            <Login />
+
+            <Router />
           </Provider>);
       default:
         return <Spinner size="large" />;
@@ -62,12 +68,12 @@ export default class App extends Component<Props> {
   }
 
   render() {
+    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
     return (
-      <View style={{ flex: 1 }}>
-        <Header headerText={'Authentication !'} />
+      <Provider store={store} >
 
-          {this.renderContent()}
-      </View>
+        <Router />
+      </Provider>
 
     );
   }

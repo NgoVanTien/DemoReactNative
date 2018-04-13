@@ -67,7 +67,7 @@ class Login extends Component {
             secureTextEntry
             placeholder="password"
             lable={'Password'}
-            value={this.state.password}
+            value={this.props.password}
             onChangeText={this.onPasswordChange.bind(this)}
           />
         </CardSection>
