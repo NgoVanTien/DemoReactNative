@@ -26,6 +26,7 @@ export default class App extends Component<Props> {
       <View style={styles.container}>
         <Text style={styles.welcome}>
           Ngo Van Tien - Hello !
+          Tien Dep Trai
         </Text>
         <Text style={styles.instructions}>
           To get started, edit App.js
