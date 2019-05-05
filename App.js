@@ -6,53 +6,75 @@
 
 import React, { Component } from 'react';
 import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
+  View,
+  Text
 } from 'react-native';
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import firebase from '@firebase/app';
+import '@firebase/firestore'
+import ReduxThunk from 'redux-thunk'
+import AlbumsList from './src/components/AlbumsList';
+import { Header, Button, Spinner } from './src/components/common';
+import Login from './src/components/Login';
+import Logout from './src/components/Logout';
+import TechStack from './src/components/TechStack';
+import reducers from './src/components/reducers';
+import Router from './src/components/Router';
 
 type Props = {};
+
+
+
 export default class App extends Component<Props> {
+
+  state = { loggedIn: null }
+
+  componentWillMount() {
+    firebase.initializeApp({
+      apiKey: 'AIzaSyDIKvS2VXFvVkK7EONziVP9N6PWancB1iI',
+      authDomain: 'demoreactnative-6037d.firebaseapp.com',
+      databaseURL: 'https://demoreactnative-6037d.firebaseio.com',
+      projectId: 'demoreactnative-6037d',
+      storageBucket: 'demoreactnative-6037d.appspot.com',
+      messagingSenderId: '429351964403'
+    });
+    //
+    // firebase.auth().onAuthStateChanged((user) => {
+    //   if (user) {
+    //     this.setState({ loggedIn: true });
+    //   } else {
+    //     this.setState({ loggedIn: false });
+    //   }
+    // });
+  }
+
+
+// Kiem tra da login chua
+  renderContent() {
+    switch (this.state.loggedIn) {
+      case true:
+        return <Logout />
+        // return <TechStack />
+      case false:
+        return (
+          <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))} >
+
+            <Router />
+          </Provider>);
+      default:
+        return <Spinner size="large" />;
+    }
+  }
+
   render() {
+    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
-      </View>
+      <Provider store={store} >
+
+        <Router />
+      </Provider>
+
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
